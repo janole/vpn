@@ -11,14 +11,8 @@ tls-client
 tls-version-min 1.2
 key-direction 1
 remote-cert-tls server
-<connection>
-remote ${VPNADDR} ${VPNPORT}
-proto tcp-client
-</connection>
-<connection>
-remote ${VPNADDR} ${VPNPORT}
-proto udp
-</connection>
+${CONNECTION1}
+${CONNECTION2}
 <ca>
 ${CACERT}
 </ca>
