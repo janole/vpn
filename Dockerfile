@@ -3,17 +3,17 @@ FROM debian:bookworm-slim
 LABEL maintainer="Jan Ole Suhr <ole@janole.com>"
 
 RUN true \
-    #
-    #
-    #
+#
+#
+#
     && apt-get update && apt-get -y upgrade \
-    #
-    #
-    #
+#
+#
+#
     && apt-get install -y openvpn iptables dumb-init gettext \
-    #
-    #
-    #
+#
+# Clean-up ...
+#
     && rm -rf /var/lib/apt/lists/*
 
 ENV CONFDIR=/conf
