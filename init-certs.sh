@@ -42,9 +42,9 @@ createCA()
 	envsubst < ${CACONF} | openssl req -config - -x509 -new -nodes -extensions v3_ca -key ${CAKEYFILE} -sha256 -days 3650 -out ${CACERTFILE}
 }
 
-createVPN()
+createServer()
 {
-	if [ -f ${VPNKEYFILE} ] && [ -f ${VPNCERTFILE} ];
+	if [ -f ${VPNCERTFILE} ];
 	then
 		return
 	fi
@@ -74,7 +74,7 @@ createServerConfig()
 	VPNPROTO=udp envsubst < ${SERVERCONF} > ${UDPCONF}
 }
 
-createCLIENT()
+createClient()
 {
 	CLIENTCONF=${TEMPLATESDIR}/client.conf.template
 	TCPCLIENTCONF=${TEMPLATESDIR}/tcp.ovpn.template
@@ -86,10 +86,10 @@ createCLIENT()
 	local CSRFILE="${DIR}/${NAME}.csr"
 	local CERTFILE="${DIR}/${NAME}.crt"
 
-#	if [ -f ${KEYFILE} ] && [ -f ${CERTFILE} ];
-#	then
-#		return
-#	fi
+	if [ -f ${CERTFILE} ];
+	then
+		return
+	fi
 
 	mkdir -p ${DIR}
 
@@ -106,8 +106,8 @@ createCLIENT()
 
 createCA
 
-createVPN
+createServer
 
-createCLIENT
+createClient
 
 createServerConfig
