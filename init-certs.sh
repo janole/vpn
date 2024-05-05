@@ -84,16 +84,14 @@ createClient()
 	local CSRFILE="${DIR}/${NAME}.csr"
 	local CERTFILE="${DIR}/${NAME}.crt"
 
-	if [ -f ${CERTFILE} ];
+	if [ ! -f ${CERTFILE} ];
 	then
-		return
+		mkdir -p ${DIR}
+
+		openssl genrsa -out ${KEYFILE} 4096
+		envsubst < ${CLIENTCONF} | openssl req -config - -new -key ${KEYFILE} -out ${CSRFILE}
+		openssl x509 -req -in ${CSRFILE} -CA ${CACERTFILE} -CAkey ${CAKEYFILE} -CAcreateserial -out ${CERTFILE} -days 365 -sha256
 	fi
-
-	mkdir -p ${DIR}
-
-	openssl genrsa -out ${KEYFILE} 4096
-	envsubst < ${CLIENTCONF} | openssl req -config - -new -key ${KEYFILE} -out ${CSRFILE}
-	openssl x509 -req -in ${CSRFILE} -CA ${CACERTFILE} -CAkey ${CAKEYFILE} -CAcreateserial -out ${CERTFILE} -days 365 -sha256
 
 	export CACERT=`cat $CACERTFILE`
 	export CLIENTKEY=`cat $KEYFILE`
