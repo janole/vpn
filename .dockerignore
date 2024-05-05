@@ -1,0 +1,4 @@
+.env
+.gitignore
+compose.yml
+Dockerfile
