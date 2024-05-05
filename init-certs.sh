@@ -1,8 +1,8 @@
 #!/bin/sh
 
 CADIR="${CONFDIR}/ca"
-CAKEYFILE="${CADIR}/private/ca.key"
-CACERTFILE="${CADIR}/public/ca.crt"
+CAKEYFILE="${CADIR}/ca.key"
+CACERTFILE="${CADIR}/ca.crt"
 
 createDH()
 {
@@ -36,8 +36,8 @@ createCA()
 
 	mkdir -p `dirname ${CAKEYFILE}`
 	openssl genrsa -out ${CAKEYFILE} 4096
-	mkdir -p `dirname ${CACERTFILE}`
 
+	mkdir -p `dirname ${CACERTFILE}`
 	CACONF="${TEMPLATESDIR}/ca.conf.template"
 	envsubst < ${CACONF} | openssl req -config - -x509 -new -nodes -extensions v3_ca -key ${CAKEYFILE} -sha256 -days 3650 -out ${CACERTFILE}
 }
@@ -63,8 +63,6 @@ createServer()
 
 	createTA
 	createDH
-
-	# openssl verify -verbose -CAfile ${CACERTFILE} ${VPNCERTFILE}
 }
 
 createServerConfig()

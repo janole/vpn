@@ -1,0 +1,33 @@
+services:
+  tcp: &vpn
+    image: $IMAGE
+    volumes:
+      - ./conf.test/openvpn:/conf/openvpn
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun
+    ports:
+      - 1194:1194/tcp
+    depends_on:
+      - config
+
+  udp:
+    <<: *vpn
+    ports:
+      - 1194:1194/udp
+    environment:
+      - SERVERCONF=/conf/openvpn/udp-server.conf
+
+  config:
+    image: $IMAGE
+    build:
+      x-bake:
+        platforms:
+          - linux/amd64
+          - linux/arm64
+    env_file:
+      - .env
+    volumes:
+      - ./conf.test:/conf
+    command: "/init-certs.sh"
