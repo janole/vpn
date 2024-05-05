@@ -1,20 +1,19 @@
 port ${VPNPORT}
 proto ${VPNPROTO}
 dev tun
+topology subnet
 ca ${VPNCAFILE}
 cert ${VPNCERTFILE}
 key ${VPNKEYFILE}
 dh ${VPNDHFILE}
 server 10.8.0.0 255.255.255.0
-ifconfig-pool-persist ipp.txt
 push "redirect-gateway def1 bypass-dhcp"
 push "dhcp-option DNS 8.8.8.8"
 push "dhcp-option DNS 1.1.1.1"
-push "route 10.10.0.0 255.255.0.0"
 duplicate-cn
 keepalive 10 120
 cipher AES-256-GCM
-ncp-ciphers AES-256-GCM:AES-256-CBC
+data-ciphers AES-256-GCM:AES-256-CBC
 auth SHA512
 persist-key
 persist-tun
@@ -23,4 +22,3 @@ verb 1
 tls-server
 tls-version-min 1.2
 tls-auth ${VPNTAKEYFILE} 0
-#crl-verify /etc/openvpn/crl.pem
