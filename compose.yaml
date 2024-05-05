@@ -2,20 +2,20 @@ services:
   tcp: &vpn
     image: $IMAGE
     volumes:
-      - ./conf.test/openvpn:/conf/openvpn
+      - ./conf/openvpn:/conf/openvpn
     cap_add:
       - NET_ADMIN
     devices:
       - /dev/net/tun
     ports:
-      - 1194:1194/tcp
+      - ${VPNPORT:-1194}:${VPNPORT:-1194}/tcp
     depends_on:
       - config
 
   udp:
     <<: *vpn
     ports:
-      - 1194:1194/udp
+      - ${VPNPORT:-1194}:${VPNPORT:-1194}/udp
     environment:
       - SERVERCONF=/conf/openvpn/udp-server.conf
 
@@ -29,5 +29,5 @@ services:
     env_file:
       - .env
     volumes:
-      - ./conf.test:/conf
+      - ./conf:/conf
     command: "/init-certs.sh"

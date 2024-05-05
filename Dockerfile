@@ -31,7 +31,7 @@ ENV UDPCONF=${VPNDIR}/udp-server.conf
 ENV TCPCONF=${VPNDIR}/tcp-server.conf
 
 COPY ./rules.v4 /etc/iptables/rules.v4
-COPY ./conf/openvpn ${TEMPLATESDIR}/
+COPY ./templates ${TEMPLATESDIR}/
 COPY ./init-certs.sh /init-certs.sh
 COPY ./start-ovpn.sh /start-ovpn.sh
 

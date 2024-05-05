@@ -38,7 +38,7 @@ createCA()
 	openssl genrsa -out ${CAKEYFILE} 4096
 
 	mkdir -p `dirname ${CACERTFILE}`
-	CACONF="${TEMPLATESDIR}/ca.conf.template"
+	CACONF="${TEMPLATESDIR}/openssl/ca.conf.template"
 	envsubst < ${CACONF} | openssl req -config - -x509 -new -nodes -extensions v3_ca -key ${CAKEYFILE} -sha256 -days 3650 -out ${CACERTFILE}
 }
 
@@ -55,7 +55,7 @@ createServer()
 	mkdir -p `dirname ${VPNKEYFILE}`
 	openssl genrsa -out ${VPNKEYFILE} 4096
 
-	VPNCONF="${TEMPLATESDIR}/vpn.conf.template"
+	VPNCONF="${TEMPLATESDIR}/openssl/vpn.conf.template"
 	VPNCSRFILE="${VPNDIR}/vpn.csr"
 	mkdir -p `dirname ${VPNCSRFILE}`
 	envsubst < ${VPNCONF} | openssl req -config - -new -key ${VPNKEYFILE} -out ${VPNCSRFILE}
@@ -67,15 +67,15 @@ createServer()
 
 createServerConfig()
 {
-	SERVERCONF="${TEMPLATESDIR}/server.conf.template"
+	SERVERCONF="${TEMPLATESDIR}/openvpn/server.conf.template"
 	VPNPROTO=tcp envsubst < ${SERVERCONF} > ${TCPCONF}
 	VPNPROTO=udp envsubst < ${SERVERCONF} > ${UDPCONF}
 }
 
 createClient()
 {
-	CLIENTCONF=${TEMPLATESDIR}/client.conf.template
-	TCPCLIENTCONF=${TEMPLATESDIR}/tcp.ovpn.template
+	CLIENTCONF=${TEMPLATESDIR}/openssl/client.conf.template
+	TCPCLIENTCONF=${TEMPLATESDIR}/openvpn/tcp.ovpn.template
 
 	NAME=${CLIENT_CN}
 
@@ -99,6 +99,8 @@ createClient()
 	export CLIENTKEY=`cat $KEYFILE`
 	export CLIENTCERT=`cat $CERTFILE`
 	export VPNTAKEY=`cat $VPNTAKEYFILE`
+	if [[ -z "${VPNADDR}" ]]; then export VPNADDR=${VPN_CN}
+	if [[ -z "${VPNPORT}" ]]; then export VPNPORT=1194
 	envsubst < $TCPCLIENTCONF > ${DIR}/${NAME}.ovpn
 }
 
