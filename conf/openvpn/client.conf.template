@@ -1,0 +1,10 @@
+[ req ]
+default_bits           = 4096
+distinguished_name     = req_distinguished_name
+prompt                 = no
+
+[ req_distinguished_name ]
+C                      = ${CLIENT_COUNTRY}
+ST                     = ${CLIENT_STATE}
+L                      = ${CLIENT_LOCATION}
+CN                     = ${CLIENT_CN}

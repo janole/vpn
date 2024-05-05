@@ -1,0 +1,10 @@
+[ req ]
+default_bits           = 4096
+distinguished_name     = req_distinguished_name
+prompt                 = no
+
+[ req_distinguished_name ]
+C                      = ${VPN_COUNTRY}
+ST                     = ${VPN_STATE}
+L                      = ${VPN_LOCATION}
+CN                     = ${VPN_CN}

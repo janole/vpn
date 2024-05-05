@@ -1,0 +1,33 @@
+client
+dev tun
+resolv-retry infinite
+nobind
+persist-key
+persist-tun
+cipher AES-256-GCM
+auth SHA512
+verb 1
+tls-client
+tls-version-min 1.2
+key-direction 1
+remote-cert-tls server
+<connection>
+remote ${VPNADDR} ${VPNPORT}
+proto tcp-client
+</connection>
+<connection>
+remote ${VPNADDR} ${VPNPORT}
+proto udp
+</connection>
+<ca>
+${CACERT}
+</ca>
+<cert>
+${CLIENTCERT}
+</cert>
+<key>
+${CLIENTKEY}
+</key>
+<tls-auth>
+${VPNTAKEY}
+</tls-auth>

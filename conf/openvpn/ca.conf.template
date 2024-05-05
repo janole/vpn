@@ -1,0 +1,14 @@
+[ req ]
+default_bits           = 4096
+distinguished_name     = req_distinguished_name
+x509_extensions        = v3_ca
+prompt                 = no
+
+[ req_distinguished_name ]
+C                      = ${CA_COUNTRY}
+ST                     = ${CA_STATE}
+L                      = ${CA_LOCATION}
+CN                     = ${CA_CN}
+
+[ v3_ca ]
+basicConstraints       = critical,CA:TRUE
