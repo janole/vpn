@@ -4,6 +4,8 @@ CADIR="${CONFDIR}/ca"
 CAKEYFILE="${CADIR}/ca.key"
 CACERTFILE="${CADIR}/ca.crt"
 
+if [ -z "${VPNPORT}" ]; then export VPNPORT=1194; fi
+
 createDH()
 {
 	if [ -f ${VPNDHFILE} ];
@@ -99,7 +101,6 @@ createClient()
 	export VPNTAKEY=`cat $VPNTAKEYFILE`
 
 	if [ -z "${VPNADDR}" ]; then export VPNADDR=${VPN_CN}; fi
-	if [ -z "${VPNPORT}" ]; then export VPNPORT=1194; fi
 
 	export CONNECTION1=`echo "<connection>\nremote ${VPNADDR} ${VPNPORT}\nproto udp\n</connection>\n"`
 	export CONNECTION2=`echo "<connection>\nremote ${VPNADDR} ${VPNPORT}\nproto tcp-client\n</connection>\n"`
