@@ -8,8 +8,6 @@ on:
 jobs:
   bake:
     runs-on: ubuntu-latest
-    env:
-      IMAGE: ${{ vars.IMAGE }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -23,6 +21,9 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
           logout: true
+
+      - name: Config
+        run: echo "IMAGE=${{ vars.IMAGE }}" > .env
 
       - name: Build
         run: ./build.sh
