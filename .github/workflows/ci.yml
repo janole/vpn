@@ -23,10 +23,12 @@ jobs:
           logout: true
 
       - name: Config
-        run: echo "IMAGE=${{ vars.IMAGE }}" > .env
+        run: |
+          echo "IMAGE=${{ vars.IMAGE }}" >> .env
+          echo "VERSION=$(./version.sh)" >> .env
 
-      - name: Build
-        run: ./build.sh
+#      - name: Build
+#        run: ./build.sh
 
       - uses: docker/bake-action@v4
 #        with:
