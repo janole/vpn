@@ -22,12 +22,16 @@ services:
   config:
     image: $IMAGE
     build:
+      tags:
+        - latest
+        - $VERSION
       x-bake:
         platforms:
           - linux/amd64
           - linux/arm64
     env_file:
       - .env
+      - .version
     volumes:
       - ./conf:/conf
     command: "/init-vpn.sh"
