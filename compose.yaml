@@ -1,6 +1,6 @@
 services:
   tcp: &vpn
-    image: $IMAGE
+    image: ${IMAGE:-janole/vpn}
     volumes:
       - ./conf/openvpn:/conf/openvpn
     cap_add:
@@ -20,11 +20,11 @@ services:
       - SERVERCONF=/conf/openvpn/udp-server.conf
 
   config:
-    image: $IMAGE
+    image: ${IMAGE:-janole/vpn}
     build:
       tags:
-        - $IMAGE:latest
-        - $IMAGE:$VERSION
+        - ${IMAGE:-janole/vpn}:latest
+        - ${IMAGE:-janole/vpn}:${VERSION:-dev}
       x-bake:
         platforms:
           - linux/amd64
