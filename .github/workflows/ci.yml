@@ -27,9 +27,7 @@ jobs:
           echo "IMAGE=${{ vars.IMAGE }}" >> .env
           echo "VERSION=$(./version.sh)" >> .env
 
-#      - name: Build
-#        run: ./build.sh
-
       - uses: docker/bake-action@v4
-#        with:
-#          push: true
+        with:
+          source: "${{ github.server_url }}/${{ github.repository }}.git#${{ github.ref }}"
+          push: true
