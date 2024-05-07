@@ -8,6 +8,8 @@ on:
 jobs:
   bake:
     runs-on: ubuntu-latest
+    env:
+      IMAGE: ${{ vars.IMAGE }}
     steps:
       - uses: actions/checkout@v4
         with:
