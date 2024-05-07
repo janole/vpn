@@ -2,18 +2,20 @@ FROM debian:bookworm-slim
 
 LABEL maintainer="Jan Ole Suhr <ole@janole.com>"
 
+ENV DEBIAN_FRONTEND noninteractive
+
 RUN true \
-    #
-    #
-    #
-    && apt-get update && apt-get -y upgrade \
-    #
-    #
-    #
-    && apt-get install -y openvpn iptables dumb-init gettext \
-    #
-    # Clean-up ...
-    #
+#
+# Update package list
+#
+    && apt-get update \
+#
+# Install all necessary packages
+#
+    && apt-get install -y openvpn iptables gettext dumb-init \
+#
+# Clean-up ...
+#
     && rm -rf /var/lib/apt/lists/*
 
 ENV CONFDIR=/conf
