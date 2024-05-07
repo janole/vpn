@@ -18,9 +18,9 @@ RUN true \
 #
     && rm -rf /var/lib/apt/lists/*
 
-ENV CONFDIR=/conf
-ENV VPNDIR=${CONFDIR}/openvpn
-ENV CLIENTSDIR=${CONFDIR}/clients
+ENV CADIR=/conf/ca
+ENV VPNDIR=/conf/openvpn
+ENV CLIENTSDIR=/conf/clients
 ENV TEMPLATESDIR=/.templates
 
 ENV VPNCAFILE=${VPNDIR}/ca.crt

@@ -1,6 +1,5 @@
 #!/bin/sh
 
-CADIR="${CONFDIR}/ca"
 CAKEYFILE="${CADIR}/ca.key"
 CACERTFILE="${CADIR}/ca.crt"
 
