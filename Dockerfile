@@ -32,8 +32,7 @@ ENV TCPCONF=${VPNDIR}/tcp-server.conf
 
 COPY ./rules.v4 /etc/iptables/rules.v4
 COPY ./templates ${TEMPLATESDIR}/
-COPY ./init-certs.sh /init-certs.sh
-COPY ./start-ovpn.sh /start-ovpn.sh
+COPY ./scripts/* /
 
 ENTRYPOINT ["/usr/bin/dumb-init", "--"]
-CMD ["/start-ovpn.sh"]
+CMD ["/start-vpn.sh"]

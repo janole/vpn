@@ -30,4 +30,4 @@ services:
       - .env
     volumes:
       - ./conf:/conf
-    command: "/init-certs.sh"
+    command: "/init-vpn.sh"
