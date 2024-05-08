@@ -29,5 +29,5 @@ jobs:
 
       - uses: docker/bake-action@v4
         with:
-#          source: "${{ github.server_url }}/${{ github.repository }}.git#${{ github.ref }}"
+          pull: true
           push: true
