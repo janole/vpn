@@ -99,7 +99,7 @@ createClient()
 	export CLIENTCERT=`cat $CERTFILE`
 	export VPNTAKEY=`cat $VPNTAKEYFILE`
 
-	if [ -z "${VPNADDR}" ]; then export VPNADDR=${VPN_CN}; fi
+	if [ -z "${VPN_ADDR}" ]; then export VPN_ADDR=${VPN_CN}; fi
 
 	if [ -z "${VPN_SPLIT}" ];
 	then
@@ -112,22 +112,22 @@ createClient()
 	if [ ! -z "${VPN_ROUTE2}" ]; then export VPN_ROUTE2="push \"route ${VPN_ROUTE2}\""; fi
 	if [ ! -z "${VPN_ROUTE3}" ]; then export VPN_ROUTE3="push \"route ${VPN_ROUTE3}\""; fi
 
-	if [ -z "${VPN_DNS1}" ]; then export VPN_DNS1=""; else export VPN_DNS1="push \"dhcp-option DNS ${VPN_DNS1}\""; fi
-	if [ -z "${VPN_DNS2}" ]; then export VPN_DNS2=""; else export VPN_DNS2="push \"dhcp-option DNS ${VPN_DNS2}\""; fi
+	if [ ! -z "${VPN_DNS1}" ]; then export VPN_DNS1="push \"dhcp-option DNS ${VPN_DNS1}\""; fi
+	if [ ! -z "${VPN_DNS2}" ]; then export VPN_DNS2="push \"dhcp-option DNS ${VPN_DNS2}\""; fi
 
-	export CONNECTION1=`echo "<connection>\nremote ${VPNADDR} ${VPN_PORT}\nproto udp\n</connection>\n"`
-	export CONNECTION2=`echo "<connection>\nremote ${VPNADDR} ${VPN_PORT}\nproto tcp-client\n</connection>\n"`
+	export CONNECTION1=`echo "<connection>\nremote ${VPN_ADDR} ${VPN_PORT}\nproto udp\n</connection>\n"`
+	export CONNECTION2=`echo "<connection>\nremote ${VPN_ADDR} ${VPN_PORT}\nproto tcp-client\n</connection>\n"`
 	envsubst < ${TEMPLATESDIR}/openvpn/client.ovpn.template > ${DIR}/${NAME}.ovpn
 
-	export CONNECTION1=`echo "<connection>\nremote ${VPNADDR} ${VPN_PORT}\nproto tcp-client\n</connection>\n"`
-	export CONNECTION2=`echo "<connection>\nremote ${VPNADDR} ${VPN_PORT}\nproto udp\n</connection>\n"`
+	export CONNECTION1=`echo "<connection>\nremote ${VPN_ADDR} ${VPN_PORT}\nproto tcp-client\n</connection>\n"`
+	export CONNECTION2=`echo "<connection>\nremote ${VPN_ADDR} ${VPN_PORT}\nproto udp\n</connection>\n"`
 	envsubst < ${TEMPLATESDIR}/openvpn/client.ovpn.template > ${DIR}/${NAME}-tcp-udp.ovpn
 
-	export CONNECTION1=`echo "<connection>\nremote ${VPNADDR} ${VPN_PORT}\nproto tcp-client\n</connection>\n"`
+	export CONNECTION1=`echo "<connection>\nremote ${VPN_ADDR} ${VPN_PORT}\nproto tcp-client\n</connection>\n"`
 	export CONNECTION2=""
 	envsubst < ${TEMPLATESDIR}/openvpn/client.ovpn.template > ${DIR}/${NAME}-tcp-only.ovpn
 
-	export CONNECTION1=`echo "<connection>\nremote ${VPNADDR} ${VPN_PORT}\nproto udp\n</connection>\n"`
+	export CONNECTION1=`echo "<connection>\nremote ${VPN_ADDR} ${VPN_PORT}\nproto udp\n</connection>\n"`
 	envsubst < ${TEMPLATESDIR}/openvpn/client.ovpn.template > ${DIR}/${NAME}-udp-only.ovpn
 }
 
