@@ -1,5 +1,5 @@
-port ${VPNPORT}
-proto ${VPNPROTO}
+port ${VPN_PORT}
+proto ${VPN_PROTO}
 dev tun
 topology subnet
 ca ${VPNCAFILE}
@@ -7,9 +7,12 @@ cert ${VPNCERTFILE}
 key ${VPNKEYFILE}
 dh ${VPNDHFILE}
 server 10.8.0.0 255.255.255.0
-push "redirect-gateway def1 bypass-dhcp"
-push "dhcp-option DNS 8.8.8.8"
-push "dhcp-option DNS 1.1.1.1"
+${VPN_DEF1}
+${VPN_DNS1}
+${VPN_DNS2}
+${VPN_ROUTE1}
+${VPN_ROUTE2}
+${VPN_ROUTE3}
 duplicate-cn
 keepalive 10 120
 cipher AES-256-GCM

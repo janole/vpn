@@ -8,14 +8,14 @@ services:
     devices:
       - /dev/net/tun
     ports:
-      - ${VPNPORT:-1194}:${VPNPORT:-1194}/tcp
+      - ${VPN_PORT:-1194}:${VPN_PORT:-1194}/tcp
     depends_on:
       - config
 
   udp:
     <<: *vpn
     ports:
-      - ${VPNPORT:-1194}:${VPNPORT:-1194}/udp
+      - ${VPN_PORT:-1194}:${VPN_PORT:-1194}/udp
     environment:
       - SERVERCONF=/conf/openvpn/udp-server.conf
 
