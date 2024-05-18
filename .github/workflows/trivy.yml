@@ -1,4 +1,4 @@
-name: trivy
+name: Scan Image
 
 on:
   workflow_dispatch:
