@@ -20,6 +20,9 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
           logout: true
 
+      - name: Pull Image
+        run: docker pull ${{ vars.IMAGE }}
+
       - name: Run trivy
         uses: aquasecurity/trivy-action@master
         with:
