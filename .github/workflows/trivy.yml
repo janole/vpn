@@ -6,7 +6,7 @@ on:
     - cron: '16 23 * * *'
 
 jobs:
-  bake:
+  scan:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
