@@ -9,11 +9,8 @@ jobs:
   scan:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - uses: docker/login-action@v3
+      - name: Login to Docker Registry
+        uses: docker/login-action@v3
         with:
           registry: ${{ vars.DOCKER_REGISTRY }}
           username: ${{ secrets.DOCKER_USERNAME }}
@@ -21,12 +18,12 @@ jobs:
           logout: true
 
       - name: Pull Image
-        run: docker pull ${{ vars.IMAGE }}
+        run: docker pull "${{ vars.IMAGE }}:latest"
 
       - name: Run trivy
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: "${{ vars.IMAGE }}"
+          image-ref: "${{ vars.IMAGE }}:latest"
           format: "table"
           exit-code: "1"
           ignore-unfixed: true
@@ -35,4 +32,4 @@ jobs:
       - name: Try to start build workflow if trivy failed
         if: ${{ failure() }}
         run: |
-          curl -X POST -u ${{ secrets.PAT }} -H "Accept: application/vnd.github.v3+json" -d '{"ref":"refs/heads/master"}' https://api.github.com/repos/${GITHUB_REPOSITORY}/actions/workflows/ci.yml/dispatches
+          curl -X POST -u ${{ secrets.PAT }} -H "Accept: application/vnd.github.v3+json" -d '{"ref":"refs/heads/main"}' https://api.github.com/repos/${GITHUB_REPOSITORY}/actions/workflows/ci.yml/dispatches
