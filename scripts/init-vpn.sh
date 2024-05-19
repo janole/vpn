@@ -5,6 +5,22 @@ CACERTFILE="${CADIR}/ca.crt"
 
 if [ -z "${VPN_PORT}" ]; then export VPN_PORT=1194; fi
 
+createKey()
+{
+	local KEYFILE=$1
+
+	mkdir -p `dirname ${KEYFILE}`
+
+	if [ "${KEYALG}" = "RSA" ];
+	then
+		echo "Generating RSA ${KEYFILE}"
+		openssl genrsa -out ${KEYFILE} ${KEYBITS:-4096}
+	else
+		echo "Generating ECDSA(prime256v1) ${KEYFILE}"
+		openssl ecparam -name prime256v1 -genkey -noout -out ${KEYFILE}
+	fi
+}
+
 createDH()
 {
 	if [ -f ${VPNDHFILE} ];
@@ -13,7 +29,7 @@ createDH()
 	fi
 
 	mkdir -p `dirname ${VPNDHFILE}`
-	openssl dhparam -out ${VPNDHFILE} 2048
+	openssl dhparam -out ${VPNDHFILE} ${VPNDHBITS:-4096}
 }
 
 createTA()
@@ -35,8 +51,7 @@ createCA()
 		return
 	fi
 
-	mkdir -p `dirname ${CAKEYFILE}`
-	openssl genrsa -out ${CAKEYFILE} 4096
+	createKey ${CAKEYFILE}
 
 	mkdir -p `dirname ${CACERTFILE}`
 	CACONF="${TEMPLATESDIR}/openssl/ca.conf.template"
@@ -53,8 +68,7 @@ createServer()
 	mkdir -p `dirname ${VPNCAFILE}`
 	cp ${CACERTFILE} ${VPNCAFILE}
 
-	mkdir -p `dirname ${VPNKEYFILE}`
-	openssl genrsa -out ${VPNKEYFILE} 4096
+	createKey ${VPNKEYFILE}
 
 	VPNCONF="${TEMPLATESDIR}/openssl/vpn.conf.template"
 	VPNCSRFILE="${VPNDIR}/vpn.csr"
@@ -87,9 +101,8 @@ createClient()
 
 	if [ ! -f ${CERTFILE} ];
 	then
-		mkdir -p ${DIR}
+		createKey ${KEYFILE}
 
-		openssl genrsa -out ${KEYFILE} 4096
 		envsubst < ${CLIENTCONF} | openssl req -config - -new -key ${KEYFILE} -out ${CSRFILE}
 		openssl x509 -req -in ${CSRFILE} -CA ${CACERTFILE} -CAkey ${CAKEYFILE} -CAcreateserial -out ${CERTFILE} -days ${CLIENTCERTDAYS:-365} -sha256
 	fi
