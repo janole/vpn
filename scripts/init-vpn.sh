@@ -29,7 +29,7 @@ createDH()
 	fi
 
 	mkdir -p `dirname ${VPNDHFILE}`
-	openssl dhparam -out ${VPNDHFILE} ${VPNDHBITS:-4096}
+	openssl dhparam -out ${VPNDHFILE} ${VPNDHBITS:-2048}
 }
 
 createTA()
