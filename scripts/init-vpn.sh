@@ -40,7 +40,7 @@ createCA()
 
 	mkdir -p `dirname ${CACERTFILE}`
 	CACONF="${TEMPLATESDIR}/openssl/ca.conf.template"
-	envsubst < ${CACONF} | openssl req -config - -x509 -new -nodes -extensions v3_ca -key ${CAKEYFILE} -sha256 -days 3650 -out ${CACERTFILE}
+	envsubst < ${CACONF} | openssl req -config - -x509 -new -nodes -extensions v3_ca -key ${CAKEYFILE} -sha256 -days ${CACERTDAYS:-3650} -out ${CACERTFILE}
 }
 
 createServer()
@@ -60,7 +60,7 @@ createServer()
 	VPNCSRFILE="${VPNDIR}/vpn.csr"
 	mkdir -p `dirname ${VPNCSRFILE}`
 	envsubst < ${VPNCONF} | openssl req -config - -new -key ${VPNKEYFILE} -out ${VPNCSRFILE}
-	openssl x509 -req -in ${VPNCSRFILE} -CA ${CACERTFILE} -CAkey ${CAKEYFILE} -CAcreateserial -out ${VPNCERTFILE} -days 500 -sha256
+	openssl x509 -req -in ${VPNCSRFILE} -CA ${CACERTFILE} -CAkey ${CAKEYFILE} -CAcreateserial -out ${VPNCERTFILE} -days ${VPNCERTDAYS:-365} -sha256
 
 	createTA
 	createDH
@@ -91,7 +91,7 @@ createClient()
 
 		openssl genrsa -out ${KEYFILE} 4096
 		envsubst < ${CLIENTCONF} | openssl req -config - -new -key ${KEYFILE} -out ${CSRFILE}
-		openssl x509 -req -in ${CSRFILE} -CA ${CACERTFILE} -CAkey ${CAKEYFILE} -CAcreateserial -out ${CERTFILE} -days 365 -sha256
+		openssl x509 -req -in ${CSRFILE} -CA ${CACERTFILE} -CAkey ${CAKEYFILE} -CAcreateserial -out ${CERTFILE} -days ${CLIENTCERTDAYS:-365} -sha256
 	fi
 
 	export CACERT=`cat $CACERTFILE`
