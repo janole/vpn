@@ -22,6 +22,6 @@ ${CLIENTCERT}
 <key>
 ${CLIENTKEY}
 </key>
-<tls-auth>
+<tls-crypt>
 ${VPNTAKEY}
-</tls-auth>
+</tls-crypt>

@@ -24,4 +24,4 @@ status openvpn-status.log
 verb 1
 tls-server
 tls-version-min 1.2
-tls-auth ${VPNTAKEYFILE} 0
+tls-crypt ${VPNTAKEYFILE} 0
