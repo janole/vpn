@@ -1,6 +1,7 @@
 [ req ]
 default_bits           = 4096
 distinguished_name     = req_distinguished_name
+x509_extensions        = v3_vpn
 prompt                 = no
 
 [ req_distinguished_name ]
@@ -8,3 +9,8 @@ C                      = ${VPN_COUNTRY}
 ST                     = ${VPN_STATE}
 L                      = ${VPN_LOCATION}
 CN                     = ${VPN_CN}
+
+[ v3_vpn ]
+basicConstraints       = critical, CA:FALSE
+keyUsage               = critical, digitalSignature, keyEncipherment, keyAgreement
+extendedKeyUsage       = critical, serverAuth
