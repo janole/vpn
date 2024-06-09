@@ -1,6 +1,9 @@
+name: vpn-dev
+
 services:
   tcp: &vpn
     image: ${IMAGE:-janole/vpn}
+    restart: unless-stopped
     volumes:
       - ./conf/openvpn:/conf/openvpn
     cap_add:
@@ -10,7 +13,8 @@ services:
     ports:
       - ${VPN_PORT:-1194}:${VPN_PORT:-1194}/tcp
     depends_on:
-      - config
+      config:
+        condition: service_completed_successfully
 
   udp:
     <<: *vpn
