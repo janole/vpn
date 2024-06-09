@@ -32,6 +32,9 @@ ENV VPNTAKEYFILE=${VPNDIR}/ta.key
 ENV UDPCONF=${VPNDIR}/udp-server.conf
 ENV TCPCONF=${VPNDIR}/tcp-server.conf
 
+ENV VPN_PORT=1194
+
+
 COPY ./rules.v4 /etc/iptables/rules.v4
 COPY ./templates ${TEMPLATESDIR}/
 COPY ./scripts/* /

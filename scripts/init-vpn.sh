@@ -3,8 +3,6 @@
 CAKEYFILE="${CADIR}/ca.key"
 CACERTFILE="${CADIR}/ca.crt"
 
-if [ -z "${VPN_PORT}" ]; then export VPN_PORT=1194; fi
-
 createKey()
 {
 	local KEYFILE=$1
