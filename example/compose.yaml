@@ -1,0 +1,32 @@
+name: vpn
+
+services:
+  tcp: &vpn
+    image: ${IMAGE:-janole/vpn}
+    restart: unless-stopped
+    volumes:
+      - ./conf/openvpn:/conf/openvpn
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun
+    ports:
+      - ${VPN_PORT:-1194}:${VPN_PORT:-1194}/tcp
+    depends_on:
+      config:
+        condition: service_completed_successfully
+
+  udp:
+    <<: *vpn
+    ports:
+      - ${VPN_PORT:-1194}:${VPN_PORT:-1194}/udp
+    environment:
+      - SERVERCONF=/conf/openvpn/udp-server.conf
+
+  config:
+    image: ${IMAGE:-janole/vpn}
+    env_file:
+      - .env
+    volumes:
+      - ./conf:/conf
+    command: "/init-vpn.sh"
