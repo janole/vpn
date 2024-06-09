@@ -34,6 +34,9 @@ ENV TCPCONF=${VPNDIR}/tcp-server.conf
 
 ENV VPN_PORT=1194
 
+ENV CA_COUNTRY=US
+ENV VPN_COUNTRY=US
+ENV CLIENT_COUNTRY=US
 
 COPY ./rules.v4 /etc/iptables/rules.v4
 COPY ./templates ${TEMPLATESDIR}/
