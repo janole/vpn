@@ -111,5 +111,5 @@ Import the OVPN file to OpenVPN: <br>
 
 ### TO-DO
 
-- [ ] Add a possibility to revoke client certificates (CRL)
+- [ ] Add the possibility to revoke client certificates (CRL)
 - [ ] Add a web interface ("access server")
