@@ -100,3 +100,8 @@ my-vpn-client.ovpn                                                       100% 23
 
 Import the OVPN file to OpenVPN: <br>
 <img width="512" alt="Bildschirmfoto 2024-06-09 um 23 28 09" src="https://github.com/janole/vpn/assets/1439712/07d851ae-44d8-4452-b08a-76f92eb61877">
+
+### TO-DO
+
+- [ ] Add a possibility to revoke client certificates (CRL)
+- [ ] Add a web interface ("access server")
