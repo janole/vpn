@@ -1,5 +1,7 @@
 ![Docker Image Build Status](https://github.com/janole/vpn/workflows/Docker%20Image/badge.svg)  ![Security Scan Status](https://github.com/janole/vpn/workflows/Security%20Scan/badge.svg)
 
+An easy-to-use OpenVPN server running in a Docker container. 
+
 ### Requirements
 
 - Linux host with Docker
@@ -7,7 +9,7 @@
 
 ### Set-up
 
-Create a `docker-compose.yaml` file with the following content:
+Create a `compose.yaml` file with the following content:
 
 ````yaml
 name: vpn
@@ -52,7 +54,11 @@ VPN_CN="vpn.my-own-site.org"
 CLIENT_CN="my-vpn-client"
 ````
 
-Start the VPN with the following command:
+- `CA_CN` can be a random name
+- `VPN_CN` should be the domain name ("FQDN") of your VPN
+- `CLIENT_CN` is just a name for your client profile
+
+Now you can start the VPN with the following command:
 
 ````bash
 $ docker compose up -d
@@ -63,9 +69,11 @@ $ docker compose up -d
  ✔ Container vpn-udp-1     Started                                         2.6s 
 ````
 
-Congratulations! The VPN should be up and running now ...
+Congratulations! The VPN should be up and running after a while ...
 
-Show the generated configuration files:
+(Please note that on **first start**, the `config` container will create all the necessary private keys and certificates. Generating the Diffie-Hellman parameters might take some minutes depending on the machine you're running the VPN on.)
+
+After successful start of the VPN, you can show the generated configuration files with:
 
 ````bash
 $ find conf -type f
@@ -89,7 +97,7 @@ conf/openvpn/udp-server.conf
 conf/openvpn/vpn.key
 ````
 
-Now, you can download any of the `*.ovpn` configuration files and import them to your `OpenVPN` client.
+Now you can download any of the `*.ovpn` configuration files and import them to your `OpenVPN` client.
 
 Download the default OVPN file (`my-vpn-client.ovpn`):
 
