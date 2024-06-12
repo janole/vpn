@@ -1,4 +1,4 @@
-![Docker Image Build Status](https://github.com/janole/vpn/workflows/Docker%20Image/badge.svg)  ![Security Scan Status](https://github.com/janole/vpn/workflows/Security%20Scan/badge.svg)
+![Docker Image Build Status](https://github.com/janole/vpn/workflows/Docker%20Image/badge.svg) ![8x8](https://github.com/janole/vpn/assets/1439712/a135a230-a2c3-492e-92a7-def4d4d6f292) ![Security Scan Status](https://github.com/janole/vpn/workflows/Security%20Scan/badge.svg)
 
 An easy-to-use OpenVPN server running in a Docker container. 
 
