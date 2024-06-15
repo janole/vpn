@@ -94,6 +94,7 @@ conf/openvpn/dh.pem
 conf/openvpn/ta.key
 conf/openvpn/vpn.csr
 conf/openvpn/udp-server.conf
+conf/openvpn/serials/4ab68b294ec8852094e0c1ae8ae6be60cf305b4d
 conf/openvpn/vpn.key
 ````
 
