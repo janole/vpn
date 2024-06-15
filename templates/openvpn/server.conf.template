@@ -25,3 +25,5 @@ verb 1
 tls-server
 tls-version-min 1.2
 tls-crypt ${VPNTAKEYFILE} 0
+script-security 2
+tls-verify "/check-serial.sh ${SERIALDIR}"

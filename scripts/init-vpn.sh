@@ -3,6 +3,9 @@
 CAKEYFILE="${CADIR}/ca.key"
 CACERTFILE="${CADIR}/ca.crt"
 
+export SERIALDIR="${VPNDIR}/serials"
+mkdir -p ${SERIALDIR}
+
 createKey()
 {
 	local KEYFILE=$1
@@ -103,6 +106,14 @@ createClient()
 
 		envsubst < ${CLIENTCONF} | grep -Ev "^[^=]+=[ ]+$" | openssl req -config - -new -key ${KEYFILE} -out ${CSRFILE}
 		openssl x509 -req -in ${CSRFILE} -CA ${CACERTFILE} -CAkey ${CAKEYFILE} -CAcreateserial -out ${CERTFILE} -days ${CLIENTCERTDAYS:-365} -sha256
+	fi
+
+	# store serial number
+	SERIAL=`openssl x509 -noout -serial -in ${CERTFILE} | sed "s/serial=//" | tr '[:upper:]' '[:lower:]'`
+	SERIALFILE="${SERIALDIR}/${SERIAL}"
+	if [ ! -f ${SERIALFILE} ];
+	then
+		echo "${NAME}" > "${SERIALFILE}"
 	fi
 
 	export CACERT=`cat $CACERTFILE`
