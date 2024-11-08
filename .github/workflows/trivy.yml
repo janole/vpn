@@ -20,14 +20,21 @@ jobs:
       - name: Pull Image
         run: docker pull "${{ vars.IMAGE }}:latest"
 
+      - name: Manual Trivy Setup
+        uses: aquasecurity/setup-trivy@v0.2.0
+        with:
+          cache: true
+          version: v0.56.1
+
       - name: Run trivy
-        uses: aquasecurity/trivy-action@0.28.0
+        uses: aquasecurity/trivy-action@master
         with:
           image-ref: "${{ vars.IMAGE }}:latest"
           format: "table"
           exit-code: "1"
           ignore-unfixed: true
           severity: "LOW,MEDIUM,HIGH,CRITICAL"
+          skip-setup-trivy: true
 
       - name: Try to start build workflow if trivy failed
         if: ${{ failure() }}
