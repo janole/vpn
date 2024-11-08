@@ -21,7 +21,7 @@ jobs:
         run: docker pull "${{ vars.IMAGE }}:latest"
 
       - name: Run trivy
-        uses: aquasecurity/trivy-action@master
+        uses: aquasecurity/trivy-action@0.28.0
         with:
           image-ref: "${{ vars.IMAGE }}:latest"
           format: "table"
