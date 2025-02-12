@@ -10,6 +10,11 @@ RUN true \
 #
     && apt-get update \
 #
+# Upgrade packages to fix potential security issues:
+# - This will inflate our image, but the base image isn't updated quickly enough
+#    
+    && apt-get upgrade -y \
+#
 # Install all necessary packages
 #
     && apt-get install -y openvpn iptables gettext dumb-init \
