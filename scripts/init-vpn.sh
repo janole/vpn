@@ -85,6 +85,10 @@ createServerConfig()
 {
 	SERVERCONF="${TEMPLATESDIR}/openvpn/server.conf.template"
 
+	if [ ! -z "${VPN_ROUTE1}" ]; then export VPN_ROUTE1="push \"route ${VPN_ROUTE1}\""; fi
+	if [ ! -z "${VPN_ROUTE2}" ]; then export VPN_ROUTE2="push \"route ${VPN_ROUTE2}\""; fi
+	if [ ! -z "${VPN_ROUTE3}" ]; then export VPN_ROUTE3="push \"route ${VPN_ROUTE3}\""; fi
+
 	if [ -z "${VPN_IPV6_SERVER_BLOCK}" ]; then export VPN_IPV6_SERVER_BLOCK=""; fi
 	if [ -z "${VPN_IPV6_PUSHES}" ]; then export VPN_IPV6_PUSHES="push \"block-ipv6\""; fi
 
@@ -132,10 +136,6 @@ createClient()
 		if [ -z "${VPN_DNS1}" ]; then VPN_DNS1="1.1.1.1"; fi
 		if [ -z "${VPN_DNS2}" ]; then VPN_DNS2="8.8.8.8"; fi
 	fi
-
-	if [ ! -z "${VPN_ROUTE1}" ]; then export VPN_ROUTE1="push \"route ${VPN_ROUTE1}\""; fi
-	if [ ! -z "${VPN_ROUTE2}" ]; then export VPN_ROUTE2="push \"route ${VPN_ROUTE2}\""; fi
-	if [ ! -z "${VPN_ROUTE3}" ]; then export VPN_ROUTE3="push \"route ${VPN_ROUTE3}\""; fi
 
 	if [ -z "${VPN_IPV6_ROUTE1}" ]; then export VPN_IPV6_ROUTE1="route-ipv6 ::/1"; fi
 	if [ -z "${VPN_IPV6_ROUTE2}" ]; then export VPN_IPV6_ROUTE2="route-ipv6 8000::/1"; fi
