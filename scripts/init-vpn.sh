@@ -92,6 +92,9 @@ createServerConfig()
 		if [ -z "${VPN_DNS2}" ]; then VPN_DNS2="8.8.8.8"; fi
 	fi
 
+	if [ ! -z "${VPN_DNS1}" ]; then export VPN_DNS1="push \"dhcp-option DNS ${VPN_DNS1}\""; fi
+	if [ ! -z "${VPN_DNS2}" ]; then export VPN_DNS2="push \"dhcp-option DNS ${VPN_DNS2}\""; fi
+
 	if [ ! -z "${VPN_ROUTE1}" ]; then export VPN_ROUTE1="push \"route ${VPN_ROUTE1}\""; fi
 	if [ ! -z "${VPN_ROUTE2}" ]; then export VPN_ROUTE2="push \"route ${VPN_ROUTE2}\""; fi
 	if [ ! -z "${VPN_ROUTE3}" ]; then export VPN_ROUTE3="push \"route ${VPN_ROUTE3}\""; fi
@@ -139,9 +142,6 @@ createClient()
 
 	if [ -z "${VPN_IPV6_ROUTE1}" ]; then export VPN_IPV6_ROUTE1="route-ipv6 ::/1"; fi
 	if [ -z "${VPN_IPV6_ROUTE2}" ]; then export VPN_IPV6_ROUTE2="route-ipv6 8000::/1"; fi
-
-	if [ ! -z "${VPN_DNS1}" ]; then export VPN_DNS1="push \"dhcp-option DNS ${VPN_DNS1}\""; fi
-	if [ ! -z "${VPN_DNS2}" ]; then export VPN_DNS2="push \"dhcp-option DNS ${VPN_DNS2}\""; fi
 
 	export CONNECTION1=`echo "<connection>\nremote ${VPN_ADDR} ${VPN_PORT}\nproto udp\n</connection>\n"`
 	export CONNECTION2=`echo "<connection>\nremote ${VPN_ADDR} ${VPN_PORT}\nproto tcp-client\n</connection>\n"`
