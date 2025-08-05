@@ -4,13 +4,8 @@ resolv-retry infinite
 nobind
 persist-key
 persist-tun
-
-# --- IPv6 Leak Protection ---
-# The following two lines redirect all IPv6 traffic into the VPN.
-route-ipv6 ::/1
-route-ipv6 8000::/1
-# ---------------------------
-
+${VPN_IPV6_CLIENT_ROUTE1}
+${VPN_IPV6_CLIENT_ROUTE2}
 cipher AES-256-GCM
 auth SHA512
 verb 1

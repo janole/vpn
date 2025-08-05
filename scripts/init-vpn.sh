@@ -151,6 +151,9 @@ createClient()
 
 	export CONNECTION1=`echo "<connection>\nremote ${VPN_ADDR} ${VPN_PORT}\nproto udp\n</connection>\n"`
 	envsubst < ${TEMPLATESDIR}/openvpn/client.ovpn.template > ${DIR}/${NAME}-udp-only.ovpn
+
+	if [ ! -z "${VPN_IPV6_ROUTE1}" ]; then export VPN_IPV6_ROUTE1="route-ipv6 ::/1"; fi
+	if [ ! -z "${VPN_IPV6_ROUTE2}" ]; then export VPN_IPV6_ROUTE2="route-ipv6 8000::/1"; fi
 }
 
 createCA
