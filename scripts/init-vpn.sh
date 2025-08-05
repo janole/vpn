@@ -85,6 +85,13 @@ createServerConfig()
 {
 	SERVERCONF="${TEMPLATESDIR}/openvpn/server.conf.template"
 
+	if [ -z "${VPN_SPLIT}" ];
+	then
+		export VPN_DEF1="push \"redirect-gateway def1 bypass-dhcp\"";
+		if [ -z "${VPN_DNS1}" ]; then VPN_DNS1="1.1.1.1"; fi
+		if [ -z "${VPN_DNS2}" ]; then VPN_DNS2="8.8.8.8"; fi
+	fi
+
 	if [ ! -z "${VPN_ROUTE1}" ]; then export VPN_ROUTE1="push \"route ${VPN_ROUTE1}\""; fi
 	if [ ! -z "${VPN_ROUTE2}" ]; then export VPN_ROUTE2="push \"route ${VPN_ROUTE2}\""; fi
 	if [ ! -z "${VPN_ROUTE3}" ]; then export VPN_ROUTE3="push \"route ${VPN_ROUTE3}\""; fi
@@ -129,13 +136,6 @@ createClient()
 	export VPNTAKEY=`cat $VPNTAKEYFILE`
 
 	if [ -z "${VPN_ADDR}" ]; then export VPN_ADDR=${VPN_CN}; fi
-
-	if [ -z "${VPN_SPLIT}" ];
-	then
-		export VPN_DEF1="push \"redirect-gateway def1 bypass-dhcp\"";
-		if [ -z "${VPN_DNS1}" ]; then VPN_DNS1="1.1.1.1"; fi
-		if [ -z "${VPN_DNS2}" ]; then VPN_DNS2="8.8.8.8"; fi
-	fi
 
 	if [ -z "${VPN_IPV6_ROUTE1}" ]; then export VPN_IPV6_ROUTE1="route-ipv6 ::/1"; fi
 	if [ -z "${VPN_IPV6_ROUTE2}" ]; then export VPN_IPV6_ROUTE2="route-ipv6 8000::/1"; fi
