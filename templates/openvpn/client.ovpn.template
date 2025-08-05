@@ -7,8 +7,6 @@ persist-tun
 
 # --- IPv6 Leak Protection ---
 # The following two lines redirect all IPv6 traffic into the VPN.
-# Since the VPN server doesn't handle IPv6, this traffic goes nowhere,
-# effectively preventing any IPv6 leaks.
 route-ipv6 ::/1
 route-ipv6 8000::/1
 # ---------------------------
