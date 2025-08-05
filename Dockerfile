@@ -34,9 +34,6 @@ ENV VPNCERTFILE=${VPNDIR}/vpn.crt
 ENV VPNDHFILE=${VPNDIR}/dh.pem
 ENV VPNTAKEYFILE=${VPNDIR}/ta.key
 
-ENV VPN_IPV6_SERVER_BLOCK=""
-ENV VPN_IPV6_PUSHES="push \"block-ipv6\""
-
 ENV UDPCONF=${VPNDIR}/udp-server.conf
 ENV TCPCONF=${VPNDIR}/tcp-server.conf
 

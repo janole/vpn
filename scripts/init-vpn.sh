@@ -84,6 +84,10 @@ createServer()
 createServerConfig()
 {
 	SERVERCONF="${TEMPLATESDIR}/openvpn/server.conf.template"
+
+	if [ ! -z "${VPN_IPV6_SERVER_BLOCK}" ]; then export VPN_IPV6_SERVER_BLOCK=""; fi
+	if [ ! -z "${VPN_IPV6_PUSHES}" ]; then export VPN_IPV6_PUSHES="push \"block-ipv6\""; fi
+
 	VPN_PROTO=tcp envsubst < ${SERVERCONF} > ${TCPCONF}
 	VPN_PROTO=udp envsubst < ${SERVERCONF} > ${UDPCONF}
 }
