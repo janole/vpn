@@ -13,6 +13,8 @@ ${VPN_DNS2}
 ${VPN_ROUTE1}
 ${VPN_ROUTE2}
 ${VPN_ROUTE3}
+${VPN_IPV6_SERVER_BLOCK}
+${VPN_IPV6_PUSHES}
 duplicate-cn
 keepalive 10 120
 cipher AES-256-GCM

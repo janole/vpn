@@ -4,6 +4,8 @@ resolv-retry infinite
 nobind
 persist-key
 persist-tun
+${VPN_IPV6_ROUTE1}
+${VPN_IPV6_ROUTE2}
 cipher AES-256-GCM
 auth SHA512
 verb 1
