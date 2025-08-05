@@ -2,7 +2,7 @@ FROM debian:bookworm-slim
 
 LABEL maintainer="Jan Ole Suhr <ole@janole.com>"
 
-ENV DEBIAN_FRONTEND noninteractive
+ENV DEBIAN_FRONTEND=noninteractive
 
 RUN true \
 #
