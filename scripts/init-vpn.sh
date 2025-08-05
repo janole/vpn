@@ -95,7 +95,6 @@ createServerConfig()
 createClient()
 {
 	CLIENTCONF=${TEMPLATESDIR}/openssl/client.conf.template
-	TCPCLIENTCONF=${TEMPLATESDIR}/openvpn/tcp.ovpn.template
 
 	NAME=${CLIENT_CN}
 
